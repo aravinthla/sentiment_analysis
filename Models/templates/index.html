@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sentiment Analysis</title>
+</head>
+<body>
+    <h1>Sentiment Analysis</h1>
+    <form id="sentiment-form">
+        <input type="text" name="text" placeholder="Enter text" required>
+        <button type="submit">Predict</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+        document.getElementById('sentiment-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const response = await fetch('/predict', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            if(data.sentiment == 1){
+                document.getElementById('result').innerText = "Sentiment: Positive";
+            } else {
+                document.getElementById('result').innerText = "Sentiment: Negative";
+            }
+        });
+    </script>
+</body>
+</html>
